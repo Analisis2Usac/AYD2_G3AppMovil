@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Vistas/carrito_page.dart';
+import 'package:flutter_app/Vistas/categoryPage.dart';
+import 'package:flutter_app/Vistas/servicios_page.dart';
 import 'package:flutter_app/login_page.dart';
 
 void main() => runApp(MyApp());
@@ -9,7 +11,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   static String _username;
-  static String hostApp = '192.168.1.40:4000';
+  static String hostApp = '192.168.1.10:4000';
   static void setUsername(String uname) => MyApp._username = uname;
   static void getUsername() =>  MyApp._username;
 
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: categoryPage(),
       routes: <String,WidgetBuilder>
         {
           '/carrito_Page': (BuildContext context) => CarridoPage(),

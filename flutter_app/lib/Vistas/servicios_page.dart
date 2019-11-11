@@ -5,20 +5,17 @@ import 'dart:async';
 import 'dart:convert';
 
 
-class servicios_Page extends StatefulWidget {
+class serviciosPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _serviciosPageState createState() => _serviciosPageState();
+
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _formkey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
 
-  String _password = "jorged104@gmail.com";
-  String _email = "...";
+class _serviciosPageState extends State<serviciosPage>  {
 
-  Future<String> _login() async {
+
+  /*Future<String> _login() async {
     final response = await http.post('http://${MyApp.hostApp}/loginAPI', body: {
       "id": _usernameController.text,
       "pass": _passwordController.text,
@@ -32,58 +29,159 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacementNamed(context, '/carrito_Page');
     }
     return datauser;
-  }
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            size: 40.0,
+            color: Colors.white,
+          ),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+        ),
         backgroundColor: Colors.deepPurple,
+        title: Text(
+          "Detalle servicio",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      body: Container(
-          padding: EdgeInsets.all(50.0),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 50,),
-              Text(
-                'Login Information' ,
-                style: TextStyle(fontSize:20),
-              ),
-              TextFormField(
-                  controller: _usernameController,
-                  onSaved: (String value) => _email = value,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: "Email")),
-              TextFormField(
-                  controller: _passwordController,
-                  onSaved: (String value) => _password = value,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText:"Password")),
-              RaisedButton(
-                textColor: Colors.white,
-                color : Colors.deepPurple,
+     body: _buildProductDetailsPage(context),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+      );
+  }
 
-                child: Text('Login'),
-                onPressed: () {
-                  try{
-                    setState(() {
-                      _email = "Cargando ...";
-                    });
-                    _login();
-                    //Navigator.pop(context);
-                  }catch(err) {
-
-                  }
-
-                } ,
-              ),
-              Text(
-                  _email.toString()
-              )
-            ],
-          )
-      ),
+  _buildProductDetailsPage(BuildContext context) {
+    Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    return ListView(
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(4.0),
+          child: Card(
+            elevation: 4.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildServiceImageWidgets(),
+                SizedBox(height: 12.0),
+                _buildDivider(screenSize),
+                SizedBox(height: 12.0),
+                _buildServiceTitle(),
+                SizedBox(height: 12.0),
+                _buildDivider(screenSize),
+                SizedBox(height: 12.0),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 
+
+  _buildDivider(Size screenSize) {
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.grey[600],
+          width: screenSize.width,
+          height: 0.25,
+        ),
+      ],
+    );
+  }
+  
+  _buildServiceTitle(){
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Center(
+          child: Text("Producto Titulo", style: TextStyle(fontSize: 25,color:Colors.black ),),
+        ),
+      );
+  }
+  _buildServiceImageWidgets(){
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        height: 250.0,
+        child:Center(
+          child: Image.asset("assets/images/notfound.png"),
+        )
+      )
+
+    );
+  }
+  _buildBottomNavigationBar() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50.0,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 1,
+            child: RaisedButton(
+              onPressed: (){},
+              color: Colors.grey,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                      Icon(
+                        Icons.list,
+                        color: Colors.white
+                      ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    Text(
+                      "SAVE",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 2,
+            child: RaisedButton(
+              onPressed: () {},
+              color: Colors.deepPurpleAccent,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.card_travel,
+                      color: Colors.white
+                    ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    Text(
+                      "AGREGAR A CARRO",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
+
