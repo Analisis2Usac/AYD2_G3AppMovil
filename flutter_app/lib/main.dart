@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
 
   //static String hostApp = '3.17.131.231';
   static void setUsername(String uname) => MyApp._username = uname;
-  static void getUsername() =>  MyApp._username;
+  static String getUsername()
+  {
+    return MyApp._username;
+  }
   static List<serviciosFin> carrito = new List();
   // This widget is the root of your application.
   @override

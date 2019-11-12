@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/login_page.dart';
 
 import '../main.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'ListaServicios.dart';
+import 'carrito_page.dart';
 
 class categoryPage extends StatefulWidget {
   @override
@@ -71,22 +73,22 @@ _buildBottomNavigationBar() {
           flex: 1,
           child: RaisedButton(
             onPressed: (){
-              Navigator.pop(context);
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> LoginPage()));
             },
-            color: Colors.grey,
+            color: Colors.lightBlueAccent,
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
-                      Icons.list,
+                      Icons.account_circle,
                       color: Colors.white
                   ),
                   SizedBox(
                     width: 4.0,
                   ),
                   Text(
-                    "Atras",
+                    "Login",
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -97,7 +99,10 @@ _buildBottomNavigationBar() {
         Flexible(
           flex: 2,
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> CarridoPage()));
+
+            },
             color: Colors.deepPurpleAccent,
             child: Center(
               child: Row(

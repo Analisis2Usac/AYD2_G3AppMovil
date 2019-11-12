@@ -175,6 +175,38 @@ class serviciosFin {
      _isButtonDisabled = false;
   }
 
+  builderSimple(context)
+  {
+
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0,vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
+          leading: Container(
+            padding: EdgeInsets.only(right: 12.0),
+            decoration: new BoxDecoration(
+                border: new Border(right: BorderSide(width: 1.0,color: Colors.white24))
+            ),
+            child: Icon(Icons.add,color: Colors.white24) ,
+
+          ),
+          title: Text(this.nombre.toString() , style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          trailing:
+          IconButton(
+            icon: Icon(Icons.attach_money,color: Colors.white,size: 30.0,),
+            onPressed: () =>{
+              // Navigator.push(context,MaterialPageRoute(builder: (context)=> servicioemp(this._id,this._nombre)))
+            },
+          ),
+        ),
+      ),
+    );
+
+  }
+
   builder(context)
   {
     Size screenSize = MediaQuery
@@ -215,7 +247,7 @@ class serviciosFin {
       //color: Colors.lightGreenAccent,
       child: RaisedButton(
         onPressed: _isButtonDisabled ? null : () {
-          MyApp.carrito.add(this);
+          //MyApp.carrito.add(this);
           showAlertDialog(context);
         },
         color: Colors.green,

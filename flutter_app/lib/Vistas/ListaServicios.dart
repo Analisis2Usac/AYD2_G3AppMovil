@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'carrito_page.dart';
+
 class ListaServicios extends StatefulWidget {
   int _categoria;
   String _titulo;
@@ -106,7 +108,9 @@ class _ListaServiciosState extends State<ListaServicios>  {
           Flexible(
             flex: 2,
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=> CarridoPage()));
+              },
               color: Colors.deepPurpleAccent,
               child: Center(
                 child: Row(
