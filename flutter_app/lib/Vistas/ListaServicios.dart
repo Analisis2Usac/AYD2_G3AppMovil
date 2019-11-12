@@ -1,22 +1,54 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Vistas/servicioemp.dart';
-import 'package:flutter_app/main.dart';
+
+import '../main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
-class CarridoPage extends StatefulWidget {
+class ListaServicios extends StatefulWidget {
+  int _categoria;
+  String _titulo;
+  ListaServicios(int categoria,String titulo){
+    this._categoria = categoria;
+    this._titulo = titulo;
+  }
   @override
-  _CarritoPageState createState() => _CarritoPageState();
+  _ListaServiciosState createState() => _ListaServiciosState(this._categoria,this._titulo);
+
 }
 
-class _CarritoPageState extends State<CarridoPage>
-{
-  _categoryPageState(){
-  //  _initdata();
-    //litems.add("holis2");
+
+
+class _ListaServiciosState extends State<ListaServicios>  {
+
+  List<servicios> listaCategorias = new List();
+
+
+  Future _initdata() async {
+    final response = await http.get('http://${MyApp.hostApp}/servicio/cate/${this._categoria}');
+    var data = json.decode(response.body);
+    // print(data);
+
+
+    setState(() {
+      for(final cat in data){
+     listaCategorias.add(servicios(cat["id_servicio"], cat["nombre_servicio"]));
+      }
+    });
+
+
+  }
+
+  List<String> litems = [];
+
+  int _categoria;
+  String _titulo;
+  _ListaServiciosState(int categoria,String titulo){
+    this._categoria =categoria;
+    this._titulo = titulo;
+    _initdata();
+    litems.add("holis2");
   }
 
 
@@ -27,7 +59,7 @@ class _CarritoPageState extends State<CarridoPage>
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
         title: Text(
-          "Categorias servicio",
+          "Servicio ${this._titulo}",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -102,48 +134,54 @@ class _CarritoPageState extends State<CarridoPage>
   }
   _ProductsListPageBody(){
     return ListView.builder(
-      itemCount: MyApp.carrito.length,
+      itemCount: listaCategorias.length,
       itemBuilder: (BuildContext ctx, int index){
-        return   ( MyApp.carrito[index] as _serviciomin).builder(context);
+        return listaCategorias[index].builder(context);
       },
     );
   }
 }
 
-class _serviciomin extends serviciosFin
-{
-  _serviciomin(int id, int nombre, String nombreServicio, String descripcion, TickerProvider estado) : super(id, nombre, nombreServicio, descripcion, estado);
+class servicios {
+  int _id;
+  String _nombre;
 
-  @override
-  builder(context)
+
+  servicios(int id , String nombre )
   {
-
-      return Card(
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0,vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-          child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-            leading: Container(
-              padding: EdgeInsets.only(right: 12.0),
-              decoration: new BoxDecoration(
-                  border: new Border(right: BorderSide(width: 1.0,color: Colors.white24))
-              ),
-              child: Icon(Icons.category,color: Colors.white24) ,
-
-            ),
-            title: Text(this.nombre.toString() , style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-            trailing:
-            IconButton(
-              icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,size: 30.0,),
-              onPressed: () =>{
-               // Navigator.push(context,MaterialPageRoute(builder: (context)=> servicioemp(this._id,this._nombre)))
-              },
-            ),
-          ),
-        ),
-      );
+    this._id= id;
+    this._nombre=nombre;
 
   }
+
+  builder(context )
+  {
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0,vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
+          leading: Container(
+            padding: EdgeInsets.only(right: 12.0),
+            decoration: new BoxDecoration(
+                border: new Border(right: BorderSide(width: 1.0,color: Colors.white24))
+            ),
+            child: Icon(Icons.category,color: Colors.white24) ,
+
+          ),
+          title: Text(this._nombre , style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          trailing:
+          IconButton(
+            icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,size: 30.0,),
+            onPressed: () =>{
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> servicioemp(this._id,this._nombre)))
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
 }

@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'ListaServicios.dart';
+
 class categoryPage extends StatefulWidget {
   @override
   _categoryPageState createState() => _categoryPageState();
@@ -53,15 +55,79 @@ List<categoria> listaCategorias = new List();
         ),
       ),
       body: _ProductsListPageBody(),
-      //bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
-
+_buildBottomNavigationBar() {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    height: 50.0,
+    child: Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        Flexible(
+          fit: FlexFit.tight,
+          flex: 1,
+          child: RaisedButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            color: Colors.grey,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                      Icons.list,
+                      color: Colors.white
+                  ),
+                  SizedBox(
+                    width: 4.0,
+                  ),
+                  Text(
+                    "Atras",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 2,
+          child: RaisedButton(
+            onPressed: () {},
+            color: Colors.deepPurpleAccent,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                      Icons.card_travel,
+                      color: Colors.white
+                  ),
+                  SizedBox(
+                    width: 4.0,
+                  ),
+                  Text(
+                    "Ver carro",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    ),
+  );
+}
   _ProductsListPageBody(){
     return ListView.builder(
       itemCount: listaCategorias.length,
       itemBuilder: (BuildContext ctx, int index){
-        return listaCategorias[index].builder();
+        return listaCategorias[index].builder(context);
       },
     );
   }
@@ -79,7 +145,7 @@ class categoria {
     this._imagen = imagen;
   }
 
-  builder()
+  builder(context)
   {
     return Card(
       elevation: 8.0,
@@ -100,7 +166,9 @@ class categoria {
           trailing:
               IconButton(
               icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,size: 30.0,),
-             onPressed: () =>{},
+             onPressed: () =>{
+             Navigator.push(context,MaterialPageRoute(builder: (context)=> ListaServicios(this._id,this._nombre)))
+             },
               ),
         ),
       ),

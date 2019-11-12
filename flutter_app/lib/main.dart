@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Vistas/ListaServicios.dart';
 import 'package:flutter_app/Vistas/carrito_page.dart';
 import 'package:flutter_app/Vistas/categoryPage.dart';
 import 'package:flutter_app/Vistas/servicios_page.dart';
 import 'package:flutter_app/login_page.dart';
+
+import 'Vistas/servicioemp.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +15,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   static String _username;
   static String hostApp = '192.168.1.10:4000';
+
+  //static String hostApp = '3.17.131.231';
   static void setUsername(String uname) => MyApp._username = uname;
   static void getUsername() =>  MyApp._username;
-
+  static List<serviciosFin> carrito = new List();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
